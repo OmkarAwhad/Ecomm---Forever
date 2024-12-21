@@ -1,7 +1,10 @@
+/* eslint-disable no-empty */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/frontend_assets/assets";
+import { toast } from "react-toastify";
 
 export const ShopDataContext = createContext();
 
@@ -10,6 +13,47 @@ const ShopContext = ({ children }) => {
 	const delivery_fee = 10;
 	const [search, setSearch] = useState("");
 	const [showSearch, setShowSearch] = useState(false);
+	const [cartItems, setCartItems] = useState({});
+
+	const addToCart = async (itemId, size) => {
+
+		if(!size){
+			toast.error("Select Product Size");
+			return;
+		}
+
+		let cartData = structuredClone(cartItems);
+		// if cart already has that item
+		if(cartData[itemId]){
+			if(cartData[itemId][size]){
+				cartData[itemId][size] +=1;
+			}else{
+				cartData[itemId][size] = 1;
+			}
+		}else{
+			// new entry
+			cartData[itemId] = {};
+			cartData[itemId][size] = 1;
+		}
+
+		setCartItems(cartData)
+	}
+
+	const getCartCount = () => {
+		let totalCount = 0;
+		for(const items in cartItems){
+			for(const item in cartItems[items]){
+				try {
+					if(cartItems[items][item] > 0){
+						totalCount += cartItems[items][item]
+					}
+				} catch (error) {
+					console.log(error)
+				}
+			}
+		}
+		return totalCount
+	}
 
 	const value = {
 		products,
@@ -19,6 +63,9 @@ const ShopContext = ({ children }) => {
 		setSearch,
 		showSearch,
 		setShowSearch,
+		cartItems,
+		addToCart,
+		getCartCount,
 	};
 
 	return (
