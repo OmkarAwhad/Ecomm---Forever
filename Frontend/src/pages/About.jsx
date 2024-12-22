@@ -8,7 +8,7 @@ import NewsLetterBox from "../components/NewsLetterBox";
 function About() {
    return (
       <div className="h-full">
-         <div className="text-3xl w-full flex items-center justify-center mt-10 mb-5 ">
+         <div className="text-2xl w-full flex items-center justify-center mt-10 mb-5 ">
             <Title first={"ABOUT"} second={"US"} />
          </div>
          <div className="flex flex-col gap-x-14 my-10 items-center lg:flex-row">
