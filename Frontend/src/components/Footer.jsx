@@ -4,7 +4,7 @@ import { assets } from "../assets/frontend_assets/assets";
 
 function Footer() {
 	return (
-		<div>
+		<div className="mt-20">
 			<div className="flex flex-col sm:flex-row justify-between gap-4 items-center sm:items-start sm:gap-10 py-10 ">
 				<div className=" w-full sm:w-2/5 flex flex-col sm:items-start items-center">
 					<img src={assets.logo} alt="Logo" className=" w-28 sm:w-36 mb-10" />
@@ -15,7 +15,7 @@ function Footer() {
 						laborum officiis eaque. Dolor, ullam
 						exercitationem porro pariatur assumenda recusandae
 						modi ratione placeat iste perspiciatis at hic
-						quisquam fuga 
+						quisquam fuga
 					</p>
 				</div>
 				<div className="text-gray-500">

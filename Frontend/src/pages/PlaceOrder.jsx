@@ -10,8 +10,8 @@ function PlaceOrder() {
 	const { navigate } = useContext(ShopDataContext);
 
 	return (
-		<div className="h-screen py-10 flex justify-between ">
-			<div className="w-[45%]">
+		<div className="h-screen py-10 flex lg:flex-row flex-col justify-between ">
+			<div className="w-full lg:w-[45%]">
 				<div className="text-2xl mb-5">
 					<Title first={"DELIVERY"} second={"INFORMATION"} />
 				</div>
@@ -72,16 +72,16 @@ function PlaceOrder() {
 				</form>
 			</div>
 
-			<div className="w-[40%] mt-5 ">
+			<div className=" w-full my-20 lg:w-[40%] lg:mt-5 ">
 				<CartTotal />
-				<div className="mt-10">
+				<div className="mt-10 ml-4">
 					<div className="text-lg">
 						<Title first={"PAYMENT"} second={"METHOD"} />
 					</div>
 					<div className="flex flex-col lg:flex-row gap-3">
 						<div
 							onClick={() => setMethod("stripe")}
-							className="flex items-center gap-3 w-[32%] justify-start border p-2 px-3 cursor-pointer "
+							className="flex items-center gap-3 w-[50%] lg:w-[32%] justify-start border p-2 px-3 cursor-pointer "
 						>
 							<p
 								className={`min-w-3.5 h-3.5 border-2 border-gray-400 rounded-full ${
@@ -98,7 +98,7 @@ function PlaceOrder() {
 						</div>
 						<div
 							onClick={() => setMethod("razorpay")}
-							className="flex items-center gap-3 w-[32%] justify-start border p-2 px-3 cursor-pointer "
+							className="flex items-center gap-3 w-[50%] lg:w-[32%] justify-start border p-2 px-3 cursor-pointer "
 						>
 							<p
 								className={`min-w-3.5 h-3.5 border-2 border-gray-400 rounded-full ${
@@ -115,7 +115,7 @@ function PlaceOrder() {
 						</div>
 						<div
 							onClick={() => setMethod("cod")}
-							className="flex items-center gap-3 w-[32%] justify-start border p-2 px-3 cursor-pointer "
+							className="flex items-center gap-3 w-[50%] lg:w-[32%] justify-start border p-2 px-3 cursor-pointer "
 						>
 							<p
 								className={`min-w-3.5 h-3.5 border-2 border-gray-400 rounded-full ${
@@ -129,7 +129,7 @@ function PlaceOrder() {
 							</p>
 						</div>
 					</div>
-					<div className="flex w-full items-end justify-end mt-7 ">
+					<div className="flex w-full items-end justify-end my-7 ">
 						<button
 							onClick={() => navigate("/orders")}
 							className="bg-black text-white px-10 py-2 text-sm "
