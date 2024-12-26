@@ -11,10 +11,10 @@ function BestSeller() {
 	const [bestProducts, setBestProducts] = useState([]);
 
 	useEffect(() => {
-		const bestProd = products.filter((elm) => elm.bestseller === true);
+		const bestProd = products.filter((elm) => elm.bestSeller === true);
 		// console.log(bestProd);
 		setBestProducts(bestProd.slice(0, 5));
-	}, []); // only on first render
+	}, [products]);
 
 	return (
 		<div className="my-10">
@@ -30,7 +30,7 @@ function BestSeller() {
 					<ProductItem
 						key={index}
 						id={item._id}
-						image={item.image}
+						images={item.images}
 						name={item.name}
 						price={item.price}
 					/>

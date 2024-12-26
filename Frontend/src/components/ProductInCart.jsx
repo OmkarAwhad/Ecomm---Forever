@@ -11,7 +11,7 @@ function ProductInCart({ prodData, cartData }) {
 		<div className="py-4 w-full border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4 justify-between ">
 			<div className="flex items-start gap-10 ">
 				<img
-					src={prodData.image[0]}
+					src={prodData.images[0]}
 					alt="Prod_image"
 					className=" w-16 sm:w-20 "
 				/>

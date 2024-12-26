@@ -12,7 +12,7 @@ function LatestCollection() {
 
 	useEffect(() => {
 		setLatestProducts(products.slice(0, 10));
-	}, []); // only on first render
+	}, [products]);
 
 	return (
 		<div className="my-10">
@@ -29,7 +29,7 @@ function LatestCollection() {
 					<ProductItem
 						key={index}
 						id={item._id}
-						image={item.image}
+						images={item.images}
 						name={item.name}
 						price={item.price}
 					/>

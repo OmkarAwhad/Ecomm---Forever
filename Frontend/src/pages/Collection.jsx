@@ -62,7 +62,7 @@ function Collection() {
 
 	useEffect(() => {
 		applyFilter();
-	}, [category, subCategory, search, showSearch]);
+	}, [category, subCategory, search, showSearch, products]);
 
 	const sortProducts = () => {
 		const productsCopy = [...filterProducts];
@@ -225,7 +225,7 @@ function Collection() {
 								key={index}
 								id={item._id}
 								name={item.name}
-								image={item.image}
+								images={item.images}
 								price={item.price}
 							/>
 						))}
