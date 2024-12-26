@@ -19,8 +19,7 @@ module.exports.addProduct = async (req, res) => {
 			!price ||
 			!category ||
 			!subCategory ||
-			!sizes ||
-			bestSeller === undefined
+			!sizes
 		) {
 			return res.status(401).json({
 				success: false,
@@ -90,7 +89,7 @@ module.exports.listProducts = async (req, res) => {
 
 module.exports.removeProduct = async (req, res) => {
 	try {
-      const {id} = req.body;
+		const { id } = req.body;
 		await Product.findByIdAndDelete(id);
 		res.status(201).json({
 			success: true,
@@ -107,13 +106,13 @@ module.exports.removeProduct = async (req, res) => {
 
 module.exports.singleProduct = async (req, res) => {
 	try {
-      const {id} = req.body;
-      const response = await Product.findById(id);
-      res.status(201).json({
-         success:true,
-         message:"Single Product fetched successfully",
-         products:response,
-      })
+		const { id } = req.body;
+		const response = await Product.findById(id);
+		res.status(201).json({
+			success: true,
+			message: "Single Product fetched successfully",
+			products: response,
+		});
 	} catch (error) {
 		console.log("Error in fetching single product info");
 		return res.status(500).json({
