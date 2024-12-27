@@ -6,6 +6,7 @@ require("dotenv").config();
 const userRoutes = require("./routes/user.routes");
 const productRoutes = require("./routes/product.routes");
 const cartRoutes = require("./routes/cart.routes");
+const orderRoutes = require("./routes/orders.routes");
 
 const PORT = process.env.PORT || 4000;
 
@@ -19,6 +20,7 @@ connectCloudinary();
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/cart", cartRoutes);
+app.use("/api/v1/order", orderRoutes);
 
 app.get("/", (req, res) => {
 	res.send("Hello");

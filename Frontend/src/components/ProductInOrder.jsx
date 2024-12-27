@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { ShopDataContext } from "../context/ShopContext";
 import { assets } from "../assets/frontend_assets/assets";
 
-function ProductInCart({ prodData, cartData }) {
+function ProductInCart({ prodData, getOrderData }) {
 	const { currency, updateQuantity } = useContext(ShopDataContext);
 
 	return (
@@ -15,7 +15,7 @@ function ProductInCart({ prodData, cartData }) {
 					alt="Prod_image"
 					className=" h-20 sm:w-20  "
 				/>
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-1">
 					<p className="font-medium text-xs sm:text-lg ">
 						{prodData.name}
 					</p>
@@ -24,23 +24,34 @@ function ProductInCart({ prodData, cartData }) {
 							{currency}
 							{prodData.price}
 						</p>
-                  <p>
-                     {/* Quantity:{prodData.quantity} */}
-                     Quantity: 1
-                  </p>
-						<p >
+						<p>
+							{/* Quantity:{prodData.quantity} */}
+							Quantity:{prodData.quantity}
+						</p>
+						<p>
 							{/* Size:{prodData.size} */}
-							Size: M
+							Size:{prodData.size}
 						</p>
 					</div>
-               <p className=" text-xs sm:text-sm text-gray-600">Date: 25, May, 2024</p>
+					<p className=" text-xs sm:text-sm text-gray-600">
+						Date : {new Date(prodData.date).toDateString()}
+					</p>
+					<p className=" text-xs sm:text-sm text-gray-600">
+						{" "}
+						Payment : {prodData.paymentMethod}
+					</p>
 				</div>
 			</div>
 			<div className="flex items-center gap-2 ">
-            <p className=" h-1 w-2 sm:h-2 sm:w-2 rounded-full bg-green-500"></p>
-            <p className="text-xs sm:text-sm">Ready to Ship</p>
-         </div>
-         <button className="px-3 py-2 border text-xs sm:text-sm sm:w-[150%]">Track Order</button>
+				<p className=" h-1 w-2 sm:h-2 sm:w-2 rounded-full bg-green-500"></p>
+				<p className="text-xs sm:text-sm">{prodData.status}</p>
+			</div>
+			<button
+				onClick={getOrderData}
+				className="px-3 py-2 border text-xs sm:text-sm sm:w-[150%]"
+			>
+				Track Order
+			</button>
 		</div>
 	);
 }
