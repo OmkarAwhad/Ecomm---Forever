@@ -174,6 +174,7 @@ const ShopContext = ({ children }) => {
 		cartItems,
 		addToCart,
 		getCartCount,
+		setCartItems,
 		updateQuantity,
 		getCartAmount,
 		navigate,
