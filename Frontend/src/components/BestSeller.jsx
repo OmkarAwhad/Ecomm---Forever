@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
-import Title from "./TItle";
+import Title from "./Title";
 import { ShopDataContext } from "../context/ShopContext";
 import ProductItem from "./ProductItem";
 

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { ShopDataContext } from "../context/ShopContext";
-import Title from "./TItle";
+import Title from "./Title";
 import ProductItem from "./ProductItem";
 
 function LatestCollection() {
