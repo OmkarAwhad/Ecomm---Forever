@@ -56,14 +56,14 @@ module.exports.placeOrderRazorpay = async (req, res) => {
 
 module.exports.userOrders = async (req, res) => {
 	try {
-      const {userId} = req.body;
-      const userData = await Order.find({userId})
+		const { userId } = req.body;
+		const userData = await Order.find({ userId });
 
-      return res.status(201).json({
-         success:true,
-         message:"User orders fetched",
-         response:userData,
-      })
+		return res.status(201).json({
+			success: true,
+			message: "User orders fetched",
+			response: userData,
+		});
 	} catch (error) {
 		console.log("Error in fetching user orders");
 		return res.status(500).json({
@@ -76,6 +76,12 @@ module.exports.userOrders = async (req, res) => {
 //Admin
 module.exports.allOrders = async (req, res) => {
 	try {
+		const response = await Order.find({});
+		return res.status(201).json({
+			success: true,
+			message: "All orders fetched",
+			response: response,
+		});
 	} catch (error) {
 		console.log("Error in fetching all orders");
 		return res.status(500).json({
@@ -88,6 +94,12 @@ module.exports.allOrders = async (req, res) => {
 //Admin
 module.exports.updateStatus = async (req, res) => {
 	try {
+		const { orderId, status } = req.body;
+		await Order.findByIdAndUpdate(orderId, { status });
+		res.status(201).json({
+			success: true,
+			message: "Status updated",
+		});
 	} catch (error) {
 		console.log("Error in updating status");
 		return res.status(500).json({

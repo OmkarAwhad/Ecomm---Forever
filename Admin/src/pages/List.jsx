@@ -22,7 +22,7 @@ function List({ token }) {
 				toast.error(response.data.message);
 			}
 
-			console.log(response.data.products);
+			// console.log(response.data.products);
 		} catch (error) {
 			console.log(error);
 		}

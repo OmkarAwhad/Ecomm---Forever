@@ -29,9 +29,6 @@ function Orders() {
                allOrders.push(item)
             })
          ))
-         allOrders.forEach((item, index) => {
-            console.log(`Item ${index + 1}:`, item);
-         });
          setOrderData(allOrders.reverse())
       } catch (error) {
          console.log(error)
