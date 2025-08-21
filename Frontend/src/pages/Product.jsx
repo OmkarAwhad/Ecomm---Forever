@@ -1,11 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopDataContext } from "../context/ShopContext";
 import { assets } from "../assets/frontend_assets/assets";
-import Title from "../components/Title";
-import RelatedProducts from "../components/RelatedProducts";
+import Title from "../components/endUser/Title";
+import RelatedProducts from "../components/endUser/RelatedProducts";
 
 function Product() {
 	const { productId } = useParams();

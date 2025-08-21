@@ -10,20 +10,16 @@ const {
 	verifyRazorpay,
 } = require("../controllers/orders.controller");
 const router = express.Router();
-const { authUser } = require("../middlewares/auth");
-const { adminAuth } = require("../middlewares/adminAuth");
+const { auth, isAdmin, isUser } = require("../middlewares/auth");
 
-router.post("/userorders", authUser, userOrders);
+router.post("/userorders", auth, isUser, userOrders);
+router.post("/place", auth, isUser, placeOrder);
+router.post("/stripe", auth, isUser, placeOrderStripe);
+router.post("/verifyStripe", auth, isUser, verifyStripe);
+router.post("/razorpay", auth, isUser, placeOrderRazorpay);
+router.post("/verifyRazorpay", auth, isUser, verifyRazorpay);
 
-router.post("/list", adminAuth, allOrders);
-router.post("/status", adminAuth, updateStatus);
-
-router.post("/place", authUser, placeOrder);
-
-router.post("/stripe", authUser, placeOrderStripe);
-router.post("/verifyStripe", authUser, verifyStripe);
-
-router.post("/razorpay", authUser, placeOrderRazorpay);
-router.post("/verifyRazorpay", authUser, verifyRazorpay);
+router.get("/list", auth, isAdmin, allOrders);
+router.post("/status", auth, isAdmin, updateStatus);
 
 module.exports = router;

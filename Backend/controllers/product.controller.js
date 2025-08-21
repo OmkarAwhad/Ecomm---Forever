@@ -93,7 +93,7 @@ module.exports.removeProduct = async (req, res) => {
 		await Product.findByIdAndDelete(id);
 		res.status(201).json({
 			success: true,
-			message: "Products removed successfully",
+			message: "Product removed successfully",
 		});
 	} catch (error) {
 		console.log("Error in removing product");

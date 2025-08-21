@@ -15,12 +15,24 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		cartData: {
-			type: Object,
-			default: {},
+		cartData: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Cart",
+			},
+		],
+		orders: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Order",
+			},
+		],
+		role: {
+			type: String,
+			enum: ["User", "Admin"],
 		},
 	},
 	{ minimize: false }
 );
 
-module.exports = mongoose.models.user || mongoose.model("User", userSchema);
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);

@@ -3,7 +3,11 @@ require("dotenv").config();
 
 module.exports.adminAuth = async (req, res, next) => {
 	try {
-		const { token } = req.headers;
+		const token =
+			req.cookies.token ||
+			req.headers.token ||
+			(req.header("Authorization") &&
+				req.header("Authorization").replace("Bearer ", ""));
 		if (!token) {
 			return res.status(401).json({
 				success: false,

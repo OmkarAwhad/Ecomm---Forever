@@ -7,20 +7,22 @@ const {
 } = require("../controllers/product.controller");
 const upload = require("../middlewares/multer.middlewares");
 const { adminAuth } = require("../middlewares/adminAuth");
+const { isAdmin, auth } = require("../middlewares/auth");
 const router = express.Router();
 
 router.post(
-	"/add",
+	"/admin-add",
 	upload.fields([
 		{ name: "image1", maxCount: 1 },
 		{ name: "image2", maxCount: 1 },
 		{ name: "image3", maxCount: 1 },
 		{ name: "image4", maxCount: 1 },
 	]),
-	adminAuth,
+	auth,
+	isAdmin,
 	addProduct
 );
-router.post("/remove", adminAuth, removeProduct);
+router.post("/remove", auth, isAdmin, removeProduct);
 router.get("/list", listProducts);
 router.post("/single-prod", singleProduct);
 

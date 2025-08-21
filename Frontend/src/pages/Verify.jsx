@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect } from "react";
 import { ShopDataContext } from "../context/ShopContext";
 import { useSearchParams } from "react-router-dom";

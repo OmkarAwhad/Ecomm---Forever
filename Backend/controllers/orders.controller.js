@@ -1,5 +1,7 @@
 const Order = require("../models/orders.models");
 const User = require("../models/user.model");
+const Cart = require("../models/cart.model");
+const Address = require("../models/address.model");
 require("dotenv").config();
 const Stripe = require("stripe");
 const Razorpay = require("razorpay");
@@ -17,28 +19,53 @@ const razorpay = new Razorpay({
 
 module.exports.placeOrder = async (req, res) => {
 	try {
-		const { userId, items, amount, address } = req.body;
+		const { userId, items, amount, addressId } = req.body;
+
+		// Fetch the address
+		const address = await Address.findById(addressId);
+		if (!address) {
+			return res.status(404).json({
+				success: false,
+				message: "Address not found",
+			});
+		}
 
 		const orderData = {
 			userId,
 			items,
 			amount,
-			address,
+			address: {
+				firstName: address.firstName,
+				lastName: address.lastName,
+				email: address.email,
+				street: address.street,
+				city: address.city,
+				state: address.state,
+				zipcode: address.zipcode,
+				country: address.country,
+				phone: address.phone,
+			},
 			paymentMethod: "COD",
 			payment: false,
 			date: Date.now(),
 		};
 
-		const response = await Order.create(orderData);
+		const newOrder = await Order.create(orderData);
 
-		await User.findByIdAndUpdate(userId, { cartData: {} }); // emptying the cart after order is placed
+		const user = await User.findByIdAndUpdate(userId, {
+			$push: { orders: newOrder._id },
+		});
+
+		await Cart.deleteMany({ _id: { $in: user.cartData } });
+		user.cartData = [];
+		await user.save();
 
 		return res.status(201).json({
 			success: true,
 			message: "Order placed successfully",
 		});
 	} catch (error) {
-		console.log("Error in placing the order");
+		console.log("Error in placing the order", error);
 		return res.status(500).json({
 			success: false,
 			message: "Error in placing the order",
@@ -62,6 +89,11 @@ module.exports.placeOrderStripe = async (req, res) => {
 		};
 
 		const newOrder = await Order.create(orderData);
+
+		// Update user's orders array
+		await User.findByIdAndUpdate(userId, {
+			$push: { orders: newOrder._id },
+		});
 
 		const line_items = items.map((item) => ({
 			price_data: {
@@ -91,14 +123,13 @@ module.exports.placeOrderStripe = async (req, res) => {
 			line_items,
 			mode: "payment",
 		});
-		// console.log(session)
 
 		res.status(201).json({
 			success: true,
 			session: session,
 		});
 	} catch (error) {
-		console.log("Error in placing the order on stripe");
+		console.log("Error in placing the order on stripe", error);
 		return res.status(500).json({
 			success: false,
 			message: "Error in placing the order on stripe",
@@ -111,7 +142,13 @@ module.exports.verifyStripe = async (req, res) => {
 		const { orderId, success, userId } = req.body;
 		if (success === "true") {
 			await Order.findByIdAndUpdate(orderId, { payment: true });
-			await User.findByIdAndUpdate(userId, { cartData: {} }); // empty the user cart
+
+			// Empty the cart
+			const user = await User.findById(userId);
+			await Cart.deleteMany({ _id: { $in: user.cartData } });
+			user.cartData = [];
+			await user.save();
+
 			res.json({
 				success: true,
 			});
@@ -122,7 +159,7 @@ module.exports.verifyStripe = async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.log("Error in verifying stripe payment");
+		console.log("Error in verifying stripe payment", error);
 		return res.status(500).json({
 			success: false,
 			message: "Error in verifying stripe payment",
@@ -143,12 +180,17 @@ module.exports.placeOrderRazorpay = async (req, res) => {
 			date: Date.now(),
 		};
 
-		const response = await Order.create(orderData);
+		const newOrder = await Order.create(orderData);
+
+		// Update user's orders array
+		await User.findByIdAndUpdate(userId, {
+			$push: { orders: newOrder._id },
+		});
 
 		const options = {
 			amount: amount * 10000,
 			currency: currency.toUpperCase(),
-			receipt: response._id.toString(),
+			receipt: newOrder._id.toString(),
 		};
 
 		await razorpay.orders.create(options, (error, order) => {
@@ -164,7 +206,7 @@ module.exports.placeOrderRazorpay = async (req, res) => {
 			});
 		});
 	} catch (error) {
-		console.log("Error in placing the order on razorpay");
+		console.log("Error in placing the order on razorpay", error);
 		return res.status(500).json({
 			success: false,
 			message: "Error in placing the order on razorpay",
@@ -180,7 +222,13 @@ module.exports.verifyRazorpay = async (req, res) => {
 			await Order.findByIdAndUpdate(orderData.receipt, {
 				payment: true,
 			});
-			await User.findByIdAndUpdate(userId, { cartData: {} });
+
+			// Empty the cart
+			const user = await User.findById(userId);
+			await Cart.deleteMany({ _id: { $in: user.cartData } });
+			user.cartData = [];
+			await user.save();
+
 			res.json({
 				success: true,
 				message: "Payment successful",
@@ -193,7 +241,7 @@ module.exports.verifyRazorpay = async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.log("Error in verifying razorpay payment");
+		console.log("Error in verifying razorpay payment", error);
 		return res.status(500).json({
 			success: false,
 			message: "Error in verifying razorpay payment",
@@ -204,15 +252,29 @@ module.exports.verifyRazorpay = async (req, res) => {
 module.exports.userOrders = async (req, res) => {
 	try {
 		const { userId } = req.body;
-		const userData = await Order.find({ userId, payment: true });
 
-		return res.status(201).json({
+		const user = await User.findById({ _id: userId }).populate({
+			path: "orders",
+			populate: {
+				path: "items.product",
+				model: "Product",
+			},
+		});
+
+		if (!user) {
+			return res.status(404).json({
+				success: false,
+				message: "User not found",
+			});
+		}
+
+		return res.status(200).json({
 			success: true,
 			message: "User orders fetched",
-			response: userData,
+			response: user.orders,
 		});
 	} catch (error) {
-		console.log("Error in fetching user orders");
+		console.log("Error in fetching user orders", error);
 		return res.status(500).json({
 			success: false,
 			message: "Error in fetching user orders",
@@ -223,14 +285,14 @@ module.exports.userOrders = async (req, res) => {
 //Admin
 module.exports.allOrders = async (req, res) => {
 	try {
-		const response = await Order.find({ payment: true });
-		return res.status(201).json({
+		const response = await Order.find({}).sort({ date: -1 });
+		return res.status(200).json({
 			success: true,
 			message: "All orders fetched",
 			response: response,
 		});
 	} catch (error) {
-		console.log("Error in fetching all orders");
+		console.log("Error in fetching all orders", error);
 		return res.status(500).json({
 			success: false,
 			message: "Error in fetching all orders",
@@ -243,12 +305,12 @@ module.exports.updateStatus = async (req, res) => {
 	try {
 		const { orderId, status } = req.body;
 		await Order.findByIdAndUpdate(orderId, { status });
-		res.status(201).json({
+		res.status(200).json({
 			success: true,
 			message: "Status updated",
 		});
 	} catch (error) {
-		console.log("Error in updating status");
+		console.log("Error in updating status", error);
 		return res.status(500).json({
 			success: false,
 			message: "Error in updating status",
