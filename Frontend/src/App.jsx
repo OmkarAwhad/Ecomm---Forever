@@ -38,7 +38,7 @@ function App() {
 	const { role, token, setToken } = useContext(ShopDataContext);
 
 	return (
-		<div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+		<div className="px-0 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
 			<ToastContainer />
 			<Routes>
 				<Route element={<OpenRoute />}>

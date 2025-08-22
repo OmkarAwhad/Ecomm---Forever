@@ -2,7 +2,6 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const validator = require("validator"); // for validating email n all
 const jwt = require("jsonwebtoken");
-const { mailSender } = require("../utils/mailSender.utils");
 require("dotenv").config();
 const otpGenerator = require("otp-generator");
 const OTP = require("../models/otp.models"); // Add this import (adjust path to your OTP model)

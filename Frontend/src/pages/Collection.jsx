@@ -77,7 +77,7 @@ function Collection() {
 	}, [sortType]);
 
 	return (
-		<>
+		<div className="px-4">
 			<div className="pt-10 border-t">
 				<div className="grid grid-cols-1 md:grid-cols-[15rem_1fr] gap-1 sm:gap-10">
 					<aside className="md:sticky md:top-24 md:self-start">
@@ -266,7 +266,7 @@ function Collection() {
 					</main>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

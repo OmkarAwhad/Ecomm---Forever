@@ -29,7 +29,7 @@ function Product() {
 	}, [productData, products]);
 
 	return productData ? (
-		<div className="border-t-2 pt-10 transition-opacity ease-in opacity-100 duration-500">
+		<div className="border-t-2 pt-10 px-4 transition-opacity ease-in opacity-100 duration-500">
 			{/* Product data */}
 			<div className="flex gap-12 sm:gap-12 flex-col sm:flex-row ">
 				{/* Product image */}

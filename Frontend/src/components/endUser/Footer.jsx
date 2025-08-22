@@ -3,7 +3,7 @@ import { assets } from "../../assets/frontend_assets/assets";
 
 function Footer() {
 	return (
-		<div className="mt-20 z-20 bg-white">
+		<div className="mt-20 px-4 z-20 bg-white">
 			<div className="flex flex-col sm:flex-row justify-between gap-4 items-center sm:items-start sm:gap-10 py-10 ">
 				<div className=" w-full sm:w-2/5 flex flex-col sm:items-start items-center">
 					<img

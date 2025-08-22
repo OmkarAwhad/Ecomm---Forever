@@ -23,7 +23,7 @@ function Orders() {
 				null,
 				{ headers: { Authorization: `Bearer ${token}` } }
 			);
-			console.log(response.data)
+			// console.log(response.data)
 			if (response.data.success) {
 				let allOrders = [];
 				response.data.response.forEach((order) => {

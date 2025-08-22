@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import AdminNavbar from "../components/admin/AdminNavbar";
 import AdminSidebar from "../components/admin/AdminSidebar";
 import { FiMenu, FiX } from "react-icons/fi";
+import { BsBagHeart } from "react-icons/bs";
 
 function AdminHome() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -10,8 +11,8 @@ function AdminHome() {
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<AdminNavbar />
+			<BsBagHeart size={32} />
 
-			{/* Mobile menu button */}
 			<button
 				onClick={() => setSidebarOpen(!sidebarOpen)}
 				className="lg:hidden fixed top-16 left-4 z-30 p-2 bg-white rounded-lg shadow-md border"
@@ -19,7 +20,6 @@ function AdminHome() {
 				{sidebarOpen ? <FiX size={20} /> : <FiMenu size={20} />}
 			</button>
 
-			{/* Sidebar overlay for mobile */}
 			{sidebarOpen && (
 				<div
 					className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-20"
@@ -28,7 +28,6 @@ function AdminHome() {
 			)}
 
 			<div className="flex">
-				{/* Sidebar */}
 				<div
 					className={`
                fixed left-0 top-14 sm:top-16 h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] 
@@ -41,7 +40,6 @@ function AdminHome() {
 					<AdminSidebar />
 				</div>
 
-				{/* Main content */}
 				<div className="flex-1 lg:ml-64 mt-14 sm:mt-16 p-3 sm:p-6 min-h-[calc(100vh-3.5rem)] sm:min-h-[calc(100vh-4rem)]">
 					<Outlet />
 				</div>
