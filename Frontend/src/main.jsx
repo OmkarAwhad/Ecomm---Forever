@@ -3,10 +3,12 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import ShopContext from './context/ShopContext'
+import {Toaster} from 'react-hot-toast'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <ShopContext>
+      <Toaster/>
       <App />
     </ShopContext>
   </BrowserRouter>

@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -38,7 +38,7 @@ const ShopContext = ({ children }) => {
 			}
 		} catch (error) {
 			console.log(error);
-			toast.error(error.message);
+			toast.error("Not able to add product, Login again");
 		}
 	};
 

@@ -22,7 +22,7 @@ const sendVerificationEmail = async (email, otp) => {
 	try {
 		const response = await mailSender(
 			email,
-			"Verification Email from StudyNotion",
+			"Verification Email from Forever",
 			otpEmail(email, otp)
 		);
 		console.log("Mail sent successfully ", response);

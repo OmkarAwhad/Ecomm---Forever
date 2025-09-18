@@ -1,8 +1,6 @@
 // App.js
 import React, { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/Home";
 import Collection from "./pages/Collection";
@@ -39,8 +37,18 @@ function App() {
 
 	return (
 		<div className="px-0 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-			<ToastContainer />
 			<Routes>
+				<Route element={<UserLayout />}>
+					<Route path="/" element={<Home />} />
+					<Route path="/collection" element={<Collection />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/contact" element={<Contact />} />
+					<Route
+						path="/product/:productId"
+						element={<Product />}
+					/>
+				</Route>
+
 				<Route element={<OpenRoute />}>
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />

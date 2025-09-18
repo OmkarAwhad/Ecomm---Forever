@@ -11,7 +11,7 @@ const addressRoutes = require("./routes/address.routes");
 const mailRoutes = require("./routes/mail.routes");
 const cookieParser = require("cookie-parser");
 
-const PORT = process.env.PORT || 4000;
+const PORT =  4000 || process.env.PORT;
 
 app.use(express.json());
 app.use(cors());

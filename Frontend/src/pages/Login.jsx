@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopDataContext } from "../context/ShopContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 function Login() {
 	const { token, role, setToken, setRole, navigate, backendUrl } =

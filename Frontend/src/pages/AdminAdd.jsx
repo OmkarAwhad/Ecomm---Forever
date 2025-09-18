@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { assets } from "../assets/admin_assets/assets";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { ShopDataContext } from "../context/ShopContext";
 
 function AdminAdd() {

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { ShopDataContext } from "../../context/ShopContext";
 
 function NewsLetterBox() {

@@ -3,7 +3,7 @@ import Title from "../components/endUser/Title";
 import ProductInOrder from "../components/endUser/ProductInOrder";
 import { ShopDataContext } from "../context/ShopContext";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 
 function Orders() {
